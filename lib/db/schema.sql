@@ -7,7 +7,7 @@ CREATE TABLE authors(
     name TEXT NOT NULL,
     email TEXT UNIQUE NOT NULL,
     location TEXT,
-    genre TEXT 
+    category TEXT 
 );
 
 CREATE TABLE magazines (
