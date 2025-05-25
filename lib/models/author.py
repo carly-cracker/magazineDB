@@ -25,3 +25,8 @@ class Author:
         rows = cursor.execute("SELECT * FROM authors"). fetchall()
         return [cls(*row) for row in rows]
     
+    @classmethod
+    def find_by_id(cls,id):
+        cursor = CONNECTION.cursor
+        row = cursor.execute("SELECT * FROM authors WHERE id = ?",(id,)).fetchone()
+        return cls(*row) if row else None
