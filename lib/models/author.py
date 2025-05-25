@@ -32,16 +32,16 @@ class Author:
             raise ValueError("Email must be a valid  string containing '@'.")
 
 
-
-    @classmethod
-    def create(cls,name,email,location=None,category=None):
+    def save(self):
+        if not self.name or not self.email:
+            raise ValueError("Author must have name and an email")
         cursor= CONNECTION.cursor()
         cursor.execute(
             "INSERT INTO authors(name,email,location,category) VALUES(?,?,?,?)",
-            (name,email,location,category)
+            (self.name,self.email,self.location,self.category)
         )
         CONNECTION.commit()
-        return cls(cursor.lastrowid,name,email,location,category)
+        self.id = cursor.lastrowid
     
     @classmethod
     def all(cls):
@@ -51,7 +51,7 @@ class Author:
     
     @classmethod
     def find_by_id(cls,id):
-        cursor = CONNECTION.cursor
+        cursor = CONNECTION.cursor()
         row = cursor.execute("SELECT * FROM authors WHERE id = ?",(id,)).fetchone()
         return cls(*row) if row else None
     

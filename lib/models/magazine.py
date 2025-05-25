@@ -25,14 +25,14 @@ class Magazine:
     @category.setter
     def category(self, value):
         if isinstance(value, str) and len(value)>0:
-            self._name = value
+            self._category = value
         else:
             raise ValueError("the category must be a string")
         
     def save(self):
         cursor = CONNECTION.cursor()
         cursor.execute(
-            "INSERT INTO magazines (name, category) VALUES (?,?)"
+            "INSERT INTO magazines (name, category) VALUES (?,?)",
             (self.name, self.category)
         )
         CONNECTION.commit()
