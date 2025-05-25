@@ -18,3 +18,10 @@ class Author:
         )
         CONNECTION.commit()
         return cls(cursor.lastrowid,name,email,location,category)
+    
+    @classmethod
+    def all(cls)
+        cursor = CONNECTION.cursor()
+        rows = cursor.execute("SELECT * FROM authors"). fetchall()
+        return [cls(*row) for row in rows]
+    
