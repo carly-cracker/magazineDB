@@ -38,3 +38,21 @@ class Magazine:
         CONNECTION.commit()
         self.id = cursor.lastrowid
         return self
+    
+    @classmethod
+    def find_by_id(cls, id):
+        cursor = CONNECTION.cursor()
+        row = cursor.execute("SELECT * FROM magazines WHERE id = ?", (id,)).fetchone()
+        return cls(*row) if row else None
+
+    @classmethod
+    def find_by_name(cls, name):
+        cursor = CONNECTION.cursor()
+        row = cursor.execute("SELECT * FROM magazines WHERE name = ?", (name,)).fetchone()
+        return cls(*row) if row else None
+
+    @classmethod
+    def find_by_category(cls, category):
+        cursor = CONNECTION.cursor()
+        rows = cursor.execute("SELECT * FROM magazines WHERE category = ?", (category,)).fetchall()
+        return [cls(*row) for row in rows]
