@@ -52,3 +52,11 @@ class Article:
         cursor = CONNECTION.cursor()
         rows = cursor.execute("SELECT * FROM articles WHERE magazine_id = ?", (magazine_id,)).fetchall()
         return [cls(*row) for row in rows]
+    
+    def author(self):
+        from lib.models.author import Author
+        return Author.find_by_id(self.author_id) if self.author_id else None
+
+    def magazine(self):
+        from lib.models.magazine import Magazine
+        return Magazine.find_by_id(self.magazine_id) if self.magazine_id else None

@@ -56,3 +56,12 @@ class Magazine:
         cursor = CONNECTION.cursor()
         rows = cursor.execute("SELECT * FROM magazines WHERE category = ?", (category,)).fetchall()
         return [cls(*row) for row in rows]
+    
+    def articles(self):
+        from lib.models.article import Article  # avoid circular import
+        return Article.find_by_magazine_id(self.id)
+
+    def authors(self):
+        articles = self.articles()
+        unique_authors = {article.author() for article in articles}
+        return list(unique_authors)

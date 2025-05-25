@@ -60,3 +60,7 @@ class Author:
         cursor = CONNECTION.cursor()
         rows = cursor.execute("SELECT * FROM authors WHERE name = ?", (name,)).fetchall()
         return [cls(*row) for row in rows]
+    
+    def articles(self):
+        from lib.models.article import Article  
+        return Article.find_by_author_id(self.id)
