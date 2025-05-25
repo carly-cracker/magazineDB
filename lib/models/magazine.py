@@ -1,0 +1,40 @@
+import sqlite3
+from lib.db.connection import CONNECTION
+
+class Magazine:
+    def __init__(self,id,name,category):
+        self.id = id
+        self.name = name
+        self.category = category
+    
+    @property
+    def name(self):
+        return self._name
+    
+    @name.setter
+    def name(self, value):
+        if isinstance(value, str) and len(value)>0:
+            self._name = value
+        else:
+            raise ValueError("name must be a string with chars")
+    
+    @property
+    def category(self):
+        return self._category
+    
+    @category.setter
+    def category(self, value):
+        if isinstance(value, str) and len(value)>0:
+            self._name = value
+        else:
+            raise ValueError("the category must be a string")
+        
+    def save(self):
+        cursor = CONNECTION.cursor()
+        cursor.execute(
+            "INSERT INTO magazines (name, category) VALUES (?,?)"
+            (self.name, self.category)
+        )
+        CONNECTION.commit()
+        self.id = cursor.lastrowid
+        return self
