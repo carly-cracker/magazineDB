@@ -48,8 +48,8 @@ class Magazine:
     @classmethod
     def find_by_name(cls, name):
         cursor = CONNECTION.cursor()
-        row = cursor.execute("SELECT * FROM magazines WHERE name = ?", (name,)).fetchone()
-        return cls(*row) if row else None
+        rows = cursor.execute("SELECT * FROM magazines WHERE name = ?", (name,)).fetchall()
+        return [cls(*row) for row in rows]
 
     @classmethod
     def find_by_category(cls, category):
