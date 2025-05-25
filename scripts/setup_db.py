@@ -1,4 +1,3 @@
-
 import sqlite3
 
 connection = sqlite3.connect('lib/db/magazine.db')
