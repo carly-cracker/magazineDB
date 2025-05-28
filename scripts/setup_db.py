@@ -1,4 +1,12 @@
 import sqlite3
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from lib.db.seed import seed_db 
+db_path = 'lib/db/magazine.db'
+
 
 connection = sqlite3.connect('lib/db/magazine.db')
 
@@ -11,10 +19,8 @@ with open("lib/db/schema.sql") as schema_file:
     cursor.executescript(schema_sql)
     print("schema.sql has been successfully executed.")
 
-with open("lib/db/seed.sql") as seed_file:
-    seed_sql = seed_file.read()
-    cursor.executescript(seed_sql)
-    print("seed.sql has been executed succsessfully.")
+seed_db(db_path) 
+
 
 connection.commit()
 connection.close()
